@@ -8,7 +8,7 @@
  *  $scope.myOptions = {
  *      options: {
  *          html: false, // boolean, srsAutocomplete extend, if true, you can use html string or DOM object in data.label for source
- *          onlySelect: false, // boolean, srsAutocomplete extend, if true, element value must be selected from search menu, otherwise set to ''.
+ *          onlySelect: false, // boolean, srsAutocomplete extend, if true, element value must be selected from suggestion menu, otherwise set to ''.
  *          focusOpen: false, // boolean, srsAutocomplete extend, if true, the suggestion menu auto open with all source data when focus
  *          appendTo: null, // jQuery UI Autocomplete Widget Options, the same below. http://api.jqueryui.com/autocomplete/#option
  *          autoFocus: false,

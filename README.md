@@ -24,17 +24,25 @@ Add the autocomplete module as a dependency to your application module:
 
     var myAppModule = angular.module('MyApp', ['ui.autocomplete'])
 
-Apply the directive to your div elements:
+Apply the directive to your input elements:
 
-    <input type="text" ng-model="modelObj" ui-autocomplete="myOptions">
+    <input type="text" ng-model="modelObj" ui-autocomplete="myOption">
 
-## Options
+## ui-autocomplete option
 
-All the Arshaw Fullcalendar options can be passed through the directive. This even means function objects that are declared on the scope. 
+###Options
+
+All the options must be passed through the directive. There have added 3 options  besides official options:
+
+- **html** If true, you can use html string or DOM object in sourceData.label
+- **focusOpen** If true, the suggestion menu auto open with all source data when element focus
+- **onlySelect** If true, element value must be selected from suggestion menu, otherwise the value will be set to ''
+
+You can config options like this:
 
     myAppModule.controller('MyController', function ($scope) {
         /* config object */
-        $scope.myOptions = {
+        $scope.myOption = {
             options: {
                 html: true,
                 focusOpen: true,
@@ -62,7 +70,7 @@ All the Arshaw Fullcalendar options can be passed through the directive. This ev
                             "Scala",
                             "Scheme"
                     ];
-                    data = $scope.myOptions.methods.filter(data, request.term);
+                    data = $scope.myOption.methods.filter(data, request.term);
 
                     if (!data.length) {
                         data.push({
@@ -83,14 +91,56 @@ All the Arshaw Fullcalendar options can be passed through the directive. This ev
     });
 
     // in html template
-    <input type="text" ng-model="modelObj" ui-autocomplete="myOptions">
+    <input type="text" ng-model="modelObj" ui-autocomplete="myOption">
+
+**All official options [Here](http://api.jqueryui.com/autocomplete/#option).**
+
+###Methods
+
+Autocomplete methods will be added to `$scope.myOption.methods` after Autocomplete initialized. There also have added a method "filter" to filter html labels besides official methods.
+
+You can invoke methods like this:
+
+    $scope.myOption.methods.search('term');
+    
+    data = $scope.myOption.methods.filter(data, request.term);
+
+**All official methods [Here](http://api.jqueryui.com/autocomplete/#methods).**
+
+###Events
+
+Autocomplete events will be emitted just like official events triggered. 
+
+You can bind events to initialize the autocomplete like this:
+
+    $scope.myOption.events = {
+        change: function( event, ui ) {
+            // do something
+        },
+        close: function( event, ui ) {
+            // do something
+        },
+        //...other event handlers
+    };
+
+**All official events [Here](http://api.jqueryui.com/autocomplete/#events).**
 
 ## Working with ng-model
 
 The ui-autocomplete directive plays nicely with ng-model.
 
-Not only primitive type ngModel, you can also use object type ngModel! There must have a property 'value' in object type ngModel
+Not only primitive type ngModel, you can also use object type ngModel! There must have a property **'value'** in object type ngModel.
 
-## Documentation for the Calendar
+A object type ngModel like this:
+
+    modelObj = {
+        id: 'ae15581f-d8e1-48e8-9d6d-b5989ae77ce5',
+        name: 'JavaScript',
+        value: 'JavaScript',
+        // some other property
+    };
+
+
+## Documentation for the autocomplete
 
 The autocomplete works alongside of all the documentation represented [here](http://api.jqueryui.com/autocomplete/)
