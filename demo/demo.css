@@ -1,0 +1,24 @@
+.ui-menu {
+    list-style: none;
+    min-width: 160px;
+}
+.ui-menu .ui-menu-item {
+    min-height: 20px;
+    line-height: 20px;
+    min-width: 160px;
+}
+
+.ui-menu .ui-menu-item > a {
+    display: block;
+    padding: 3px 10px;
+}
+
+.ui-menu-add {
+    font-weight: bolder;
+}
+
+.ui-menu .ui-menu-item a.ui-state-focus,
+.ui-menu .ui-menu-item a.ui-state-active {
+    font-weight: bolder;
+    margin: 0;
+}
