@@ -71,7 +71,13 @@ angular.module('ui.autocomplete', [])
 
     _renderItem: function (ul, item) {
       var element = item.label || item.value || item || '';
-      if (this.options.html) {
+      if (item.groupLabel) {
+        if (angular.isObject(item.groupLabel)) {
+          element = $(item.groupLabel);
+        } else {
+          element = $('<div></div>').html(item.groupLabel).addClass('ui-menu-group');
+        }
+      } else if (this.options.html) {
         if (typeof element === 'string') {
           element = $('<a></a>').html(element);
         } else {
@@ -92,29 +98,29 @@ angular.module('ui.autocomplete', [])
     link: function (scope, element, attr, ctrl) {
       var status = false,
         ngModel = null,
-        autocomplete = null,
+        autocomplete = scope.$eval(attr.srsAutocomplete),
         valueMethod = element[['textarea', 'input'].indexOf(element[0].nodeName.toLowerCase()) >= 0 ? 'val' : 'text'];
 
       function updateHandler(event, ui) {
         // listen 'autocompletechange' event, update view value and Model value
         var value;
 
-        if (autocomplete.options.onlySelect && !status && !ui.item) {
+        if (autocomplete.options.onlySelect && !status && !ui || !ui.item) {
           // if onlySelect, element value must be selected from search menu, otherwise set to ''.
           valueMethod.call(element, '');
         }
         value = valueMethod.call(element);
-        if (angular.isObject(ngModel) && ui.item) {
+        if (!value || !ui.item || !ui.item.value) {
+          emptyObj(ngModel);
+        } else if (angular.isObject(ngModel)) {
           ui.item.label = angular.isObject(ui.item.label) ? $('<div></div>').append(ui.item.label).html() : ui.item.label;
           angular.extend(ngModel, ui.item);
         }
-        if (!value || !ui.item || !ui.item.value) {
-          emptyObj(ngModel);
-        }
         if (ctrl.$viewValue !== value) {
-          scope.$apply(function () {
-            ctrl.$setViewValue(value);
-          });
+          // scope.$apply(function () {
+          //     ctrl.$setViewValue(value);
+          // });
+          ctrl.$setViewValue(value);
         }
       }
 
@@ -178,52 +184,51 @@ angular.module('ui.autocomplete', [])
         }
       });
 
-      var unregisterWatchAutocomplete = scope.$watch(attr.srsAutocomplete, function (value) {
-        if (angular.isObject(value)) {
-          autocomplete = value;
-          value.methods = angular.isObject(value.methods) ? value.methods : {};
-          value.events = angular.isObject(value.events) ? value.events : {};
-          value.options = checkOptions(value.options);
+      autocomplete.methods = angular.isObject(autocomplete.methods) ? autocomplete.methods : {};
+      autocomplete.events = angular.isObject(autocomplete.events) ? autocomplete.events : {};
+      autocomplete.options = checkOptions(autocomplete.options);
 
-          element.autocomplete(angular.extend({}, value.options, value.events));
+      if (!autocomplete.options.appendTo) {
+        autocomplete.options.appendTo = element.parents('.ng-view')[0] || element.parents('[ng-view]')[0] || null;
+      }
 
-          // extend Autocomplete methods to AngularJS
-          angular.forEach(methodsName, function (name) {
-            value.methods[name] = function () {
-              var args = [name];
-              for (var i = 0; i <= arguments.length - 1; i++) {
-                args.push(arguments[i]);
-              }
-              return element.autocomplete.apply(element, args);
-            };
-          });
-          // add filter method to AngularJS
-          value.methods.filter = filter;
+      element.autocomplete(angular.extend({}, autocomplete.options, autocomplete.events));
 
-          //autoupdate options
-          scope.$watch(attr.srsAutocomplete + '.options', function (value, old) {
-            if (!angular.equals(value, old)) {
-              value = checkOptions(value);
-              element.autocomplete('option', value);
-            }
-          });
+      // extend Autocomplete methods to AngularJS
+      angular.forEach(methodsName, function (name) {
+        autocomplete.methods[name] = function () {
+          var args = [name];
+          for (var i = 0; i <= arguments.length - 1; i++) {
+            args.push(arguments[i]);
+          }
+          return element.autocomplete.apply(element, args);
+        };
+      });
+      // add filter method to AngularJS
+      autocomplete.methods.filter = filter;
+      autocomplete.methods.update = updateHandler;
 
-          element.on('focus', autoFocusHandler);
-          // emit autocomplete events to AngularJS
-          element.on(eventsName.join(' '), function (event, ui) {
-            if (event.type === 'autocompleteclose') {
-              status = false;
-            } else if (event.type === 'autocompleteopen') {
-              status = true;
-            } else if (event.type === 'autocompletechange') {
-              updateHandler(event, ui);
-            }
-            scope.$emit(event.type, ui);
-          });
+      //autoupdate options
+      scope.$watch(function () {
+        return autocomplete.options;
+      }, function (value, old) {
+        if (!angular.equals(value, old)) {
+          value = checkOptions(value);
+          element.autocomplete('option', value);
         }
-        if (value) {
-          unregisterWatchAutocomplete();
+      });
+
+      element.on('focus', autoFocusHandler);
+      // emit autocomplete events to AngularJS
+      element.on(eventsName.join(' '), function (event, ui) {
+        if (event.type === 'autocompleteclose') {
+          status = false;
+        } else if (event.type === 'autocompleteopen') {
+          status = true;
+        } else if (event.type === 'autocompletechange') {
+          updateHandler(event, ui);
         }
+        scope.$emit(event.type, ui);
       });
     }
   };
