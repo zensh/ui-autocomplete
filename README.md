@@ -1,4 +1,4 @@
-# ui-autocomplete directive
+# ui-autocomplete directive v0.2.0
 
 AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
 
@@ -37,6 +37,9 @@ All the options must be passed through the directive. There have added 3 options
 - **html** If true, you can use html string or DOM object in sourceData.label
 - **focusOpen** If true, the suggestion menu auto open with all source data when element focus
 - **onlySelect** If true, element value must be selected from suggestion menu, otherwise the value will be set to ''
+- **groupLabel** html string or DOM object, it is used to group suggestion result, it can't be seleted
+- **outHeight** number, it is used to adjust suggestion menu' css style "max-height".
+- **maxWidth** number, the max width that suggestion menu will be
 
 You can config options like this:
 
@@ -97,19 +100,24 @@ You can config options like this:
 
 ###Methods
 
-Autocomplete methods will be added to `$scope.myOption.methods` after Autocomplete initialized. There also have added a method "filter" to filter html labels besides official methods.
+Autocomplete methods will be added to `$scope.myOption.methods` after Autocomplete initialized. There also have added 2 methods:
+
+- **filter** filter html labels besides official methods
+- **clean** use to empty ngModal object
 
 You can invoke methods like this:
 
     $scope.myOption.methods.search('term');
-    
+
     data = $scope.myOption.methods.filter(data, request.term);
+
+    $scope.myOption.methods.clean();
 
 **All official methods [Here](http://api.jqueryui.com/autocomplete/#methods).**
 
 ###Events
 
-Autocomplete events will be emitted just like official events triggered. 
+Autocomplete events will be emitted just like official events triggered.
 
 You can bind events to initialize the autocomplete like this:
 
