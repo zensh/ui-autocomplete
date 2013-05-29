@@ -32,7 +32,7 @@ Apply the directive to your input elements:
 
 ###Options
 
-All the options must be passed through the directive. There have added 3 options  besides official options:
+All the options must be passed through the directive. There have added 6 options besides official options:
 
 - **html** If true, you can use html string or DOM object in sourceData.label
 - **focusOpen** If true, the suggestion menu auto open with all source data when element focus

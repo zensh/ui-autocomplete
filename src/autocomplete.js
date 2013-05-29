@@ -114,16 +114,21 @@ angular.module('ui.autocomplete', [])
     link: function (scope, element, attr, ctrl) {
       var status = false,
         ngModel = null,
+        selectItem = null,
         autocomplete = scope.$eval(attr.uiAutocomplete),
         valueMethod = element[['textarea', 'input'].indexOf(element[0].nodeName.toLowerCase()) >= 0 ? 'val' : 'text'];
 
-      function changeNgModel(viewValue, ui) {
+      if (!angular.isObject(autocomplete)) {
+        return;
+      }
+
+      function changeNgModel(viewValue, data) {
         if (angular.isObject(ngModel)) {
           if (viewValue === '') {
             emptyObj(ngModel);
-          } else if (ui && ui.item) {
-            ui.item.label = angular.isObject(ui.item.label) ? $('<div></div>').append(ui.item.label).html() : ui.item.label;
-            angular.extend(ngModel, ui.item);
+          } else if (data && data.item) {
+            data.item.label = angular.isObject(data.item.label) ? $('<div></div>').append(data.item.label).html() : data.item.label;
+            angular.extend(ngModel, data.item);
           }
           angular.forEach(ctrl.$viewChangeListeners, function (listener) {
             listener();
@@ -137,21 +142,21 @@ angular.module('ui.autocomplete', [])
         changeNgModel('');
       }
 
-      function updateHandler(event, ui) {
+      function updateHandler(data) {
         // listen 'autocompletechange' event, update view value and Model value
         var value = valueMethod.call(element);
 
-        if (!ui || !ui.item) {
+        if (!data || !data.item) {
           // if onlySelect, element value must be selected from search menu, otherwise set to ''.
           value = autocomplete.options.onlySelect ? '' : value;
         } else {
-          value = ui.item.value;
+          value = data.item.value;
         }
         valueMethod.call(element, value);
         if (ctrl.$viewValue !== value) {
           scope.$apply(function () {
             ctrl.$setViewValue(value);
-            changeNgModel(value, ui);
+            changeNgModel(value, data);
           });
         }
       }
@@ -174,9 +179,12 @@ angular.module('ui.autocomplete', [])
 
       function emptyObj(a) {
         if (angular.isObject(a)) {
+          var reg = /^\$/;
           angular.forEach(a, function (value, key) {
             var type = typeof value;
-            if (type === 'number') {
+            if (reg.test(key)) {
+              return; // don't clean private property of AngularJS
+            } else if (type === 'number') {
               a[key] = 0;
             } else if (type === 'string') {
               a[key] = '';
@@ -210,9 +218,7 @@ angular.module('ui.autocomplete', [])
               return ngModel;
             });
             valueMethod.call(element, ngModel.value);
-            scope.$watch(function () {
-              return ngModel.value;
-            }, function (value) {
+            scope.$watch(attr.ngModel + '.value', function (value) {
               if (valueMethod.call(element) !== value) {
                 valueMethod.call(element, value);
               }
@@ -234,9 +240,9 @@ angular.module('ui.autocomplete', [])
       }
 
       element.autocomplete(angular.extend({}, autocomplete.options, autocomplete.events));
-      var widget = element.autocomplete('widget');
       // remove default class, use bootstrap style
-      // widget.removeClass('ui-menu ui-corner-all ui-widget-content').addClass('dropdown-menu');
+      var widget = element.autocomplete('widget');
+      widget.removeClass('ui-menu ui-corner-all ui-widget-content').addClass('dropdown-menu');
 
 
       // extend Autocomplete methods to AngularJS
@@ -254,13 +260,9 @@ angular.module('ui.autocomplete', [])
       autocomplete.methods.clean = cleanNgModel;
 
       //autoupdate options
-      scope.$watch(function () {
-        return autocomplete.options;
-      }, function (value, old) {
-        if (!angular.equals(value, old)) {
-          value = checkOptions(value);
-          element.autocomplete('option', value);
-        }
+      scope.$watch(attr.uiAutocomplete + '.options', function (value) {
+        value = checkOptions(value);
+        element.autocomplete('option', value);
       });
 
       element.on('focus', autoFocusHandler);
@@ -270,11 +272,13 @@ angular.module('ui.autocomplete', [])
           status = false;
         } else if (event.type === 'autocompleteopen') {
           status = true;
+          selectItem = null;
           resizeMenu(widget, autocomplete.options.outHeight);
-        } else if (event.type === 'autocompletechange') {
-          updateHandler(event, ui);
         } else if (event.type === 'autocompleteselect') {
-          updateHandler(event, ui);
+          selectItem = ui;
+          element.blur();
+        } else if (event.type === 'autocompletechange') {
+          updateHandler(selectItem);
         }
         scope.$emit(event.type, ui);
       });
