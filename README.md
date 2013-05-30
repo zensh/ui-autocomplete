@@ -1,4 +1,4 @@
-# ui-autocomplete directive v0.2.0
+# ui-autocomplete directive v0.3.0
 
 AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
 
