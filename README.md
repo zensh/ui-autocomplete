@@ -38,12 +38,12 @@ All the options must be passed through the directive. There have added 6 options
 - **focusOpen** If true, the suggestion menu auto open with all source data when element focus
 - **onlySelect** If true, element value must be selected from suggestion menu, otherwise the value will be set to ''
 - **groupLabel** html string or DOM object, it is used to group suggestion result, it can't be seleted
-- **outHeight** number, it is used to adjust suggestion menu' css style "max-height".
+- **outHeight** number, it is used to adjust suggestion menu' css style "max-height", and you would set css "overflow-y", see demo.
 - **maxWidth** number, the max width that suggestion menu will be
 
 You can config options like this:
 
-    myAppModule.controller('MyController', function ($scope) {
+    myAppModule.controller('MyController', function ($scope, $compile) {
         /* config object */
         $scope.myOption = {
             options: {
@@ -83,7 +83,7 @@ You can config options like this:
                     }
                     // add "Add Language" button to autocomplete menu bottom
                     data.push({
-                        label: app.compile('<a class="btn btn-link ui-menu-add" ng-click="addLanguage()">Add Language</a>')($scope),
+                        label: $compile('<a class="btn btn-link ui-menu-add" ng-click="addLanguage()">Add Language</a>')($scope),
                         value: ''
                     });
                     response(data);

@@ -30,7 +30,7 @@
 
 /*global angular, $ */
 
-angular.module('ui.autocomplete', [])
+angular.module('ui.directives.autocomplete', [])
   .directive('uiAutocomplete', ['$timeout',
   function ($timeout) {
     var proto = $.ui.autocomplete.prototype,
@@ -153,10 +153,10 @@ angular.module('ui.autocomplete', [])
           } else {
             value = data.item.value;
           }
-          ctrl.$render();
           if (ctrl.$viewValue !== value) {
             scope.$apply(function () {
               ctrl.$setViewValue(value);
+              ctrl.$render();
               changeNgModel(value, data);
             });
           }
@@ -244,12 +244,6 @@ angular.module('ui.autocomplete', [])
           autocomplete.options.appendTo = element.parents('.ng-view')[0] || element.parents('[ng-view]')[0] || null;
         }
 
-        element.autocomplete(angular.extend({}, autocomplete.options, autocomplete.events));
-        // remove default class, use bootstrap style
-        autocomplete.widget = element.autocomplete('widget');
-        autocomplete.widget.removeClass('ui-menu ui-corner-all ui-widget-content').addClass('dropdown-menu');
-
-
         // extend Autocomplete methods to AngularJS
         angular.forEach(methodsName, function (name) {
           autocomplete.methods[name] = function () {
@@ -290,6 +284,11 @@ angular.module('ui.autocomplete', [])
           }
           scope.$emit(event.type, ui);
         });
+
+        element.autocomplete(angular.extend({}, autocomplete.options, autocomplete.events));
+        autocomplete.widget = element.autocomplete('widget');
+        // remove default class, use bootstrap style
+        autocomplete.widget.removeClass('ui-menu ui-corner-all ui-widget-content').addClass('dropdown-menu');
       }
     };
   }
