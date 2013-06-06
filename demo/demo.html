@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="http://lib.sinaapp.com/js/bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -16,6 +16,8 @@
       .ui-autocomplete {
           /* will be fixed by options.outHeight */
           max-height: 300px;
+          min-height: 50px;
+          max-width: 200px;
           overflow-y: auto;
           /* prevent horizontal scrollbar */
           overflow-x: hidden;
@@ -86,7 +88,7 @@
       <h1>Demo 1</h1>
       <i>Demo passing IE9/IE10/firefox/chrome</i>
       <p>Please input one more character: <strong>{{language}}</strong></p>
-      <input type="text" ng-model="language" ui-autocomplete="myOption">
+      <input type="text" ng-model="language" ui-event="{autocompletecreate:'changeClass(myOption)'}" ui-autocomplete="myOption">
 
       <h1>Demo 2</h1>
       <i>Demo passing IE9/IE10/firefox/chrome</i>
@@ -104,10 +106,10 @@
         <tbody>
             <tr ng-repeat="user in users">
                 <td>{{user.uid}}</td>
-                <td><input type="text" class="input-small" ng-model="user" ui-autocomplete="searchUser()"></td>
+                <td><input type="text" class="input-small" ng-model="user" ui-event="{autocompletecreate:'changeClass(searchUser)'}" ui-autocomplete="searchUser()"></td>
                 <td><input type="number" step="any" class="input-mini" min="16" ng-model="user.age" ></td>
                 <td><input type="text" ng-model="user.email" ></td>
-                <td><input type="text" class="input-mini" ng-model="user.group" ui-autocomplete="searchGroup"></td>
+                <td><input type="text" class="input-mini" ng-model="user.group" ui-event="{autocompletecreate:'changeClass(searchGroup)'}" ui-autocomplete="searchGroup"></td>
                 <td><input type="text" ng-model="user.desc" ></td>
             </tr>
         </tbody>
@@ -117,9 +119,10 @@
     </div> <!-- /container -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script src="http://lib.sinaapp.com/js/bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
     <script src="../src/autocomplete.js"></script>
+    <script src="event.js"></script>
     <script src="demo.js"></script>
 
   </body>

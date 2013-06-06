@@ -1,4 +1,5 @@
-# ui-autocomplete directive v0.3.0
+# ui-autocomplete directive v0.4.0
+Intend to replace Select2!
 
 AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
 
@@ -32,14 +33,13 @@ Apply the directive to your input elements:
 
 ###Options
 
-All the options must be passed through the directive. There have added 6 options besides official options:
+All the options must be passed through the directive. There have added 5 options besides official options:
 
 - **html** If true, you can use html string or DOM object in sourceData.label
 - **focusOpen** If true, the suggestion menu auto open with all source data when element focus
 - **onlySelect** If true, element value must be selected from suggestion menu, otherwise the value will be set to ''
 - **groupLabel** html string or DOM object, it is used to group suggestion result, it can't be seleted
 - **outHeight** number, it is used to adjust suggestion menu' css style "max-height", and you would set css "overflow-y", see demo.
-- **maxWidth** number, the max width that suggestion menu will be
 
 You can config options like this:
 

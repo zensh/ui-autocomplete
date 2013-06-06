@@ -1,7 +1,7 @@
 'use strict';
 /*global angular */
 
-angular.module('uiAutocompleteDemo', ['ui.directives.autocomplete']).
+angular.module('uiAutocompleteDemo', ['ui.event', 'ui.autocomplete']).
 controller('uiAutocompleteCtr', ['$scope', '$compile',
     function ($scope, $compile) {
         var uid = 4,
@@ -92,12 +92,19 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
 
         $scope.users = [];
         $scope.users.push(nameToValue(users[0]));
+
+        $scope.changeClass = function (options) {
+            var widget = options.methods.widget();
+            // remove default class, use bootstrap style
+            widget.removeClass('ui-menu ui-corner-all ui-widget-content').addClass('dropdown-menu');
+        };
+
         $scope.myOption = {
             options: {
                 html: true,
                 minLength: 1,
                 onlySelect: true,
-                outHeight: 100,
+                outHeight: 50,
                 source: function (request, response) {
                     var data = [
                             "Asp",
