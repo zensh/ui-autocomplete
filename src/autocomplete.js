@@ -30,8 +30,8 @@
 /*global angular, $ */
 
 angular.module('ui.autocomplete', [])
-  .directive('uiAutocomplete', ['$timeout',
-  function ($timeout) {
+  .directive('uiAutocomplete', ['$timeout', '$exceptionHandler',
+  function ($timeout, $exceptionHandler) {
     var proto = $.ui.autocomplete.prototype,
       initSource = proto._initSource;
 
@@ -132,10 +132,11 @@ angular.module('ui.autocomplete', [])
             });
             scope.$watch(attr.ngModel + '.value', function (value) {
               if (valueMethod() !== value) {
-                ctrl.$viewValue = ngModel.value;
+                ctrl.$viewValue = value;
                 ctrl.$render();
               }
             });
+            ctrl.$setViewValue(ngModel.value);
           }
           if (value) {
             // unregister the watch after get value
@@ -171,30 +172,34 @@ angular.module('ui.autocomplete', [])
               scope.$apply(function () {
                 ctrl.$setViewValue(value);
                 ctrl.$render();
-                changeNgModel(value, selectItem);
+                changeNgModel(selectItem);
               });
             }
           }
         };
 
-        function changeNgModel(viewValue, data) {
+        function changeNgModel(data) {
           if (angular.isObject(ngModel)) {
-            if (viewValue === '') {
+            if (!ctrl.$viewValue && ctrl.$viewValue !== 0) {
               emptyObj(ngModel);
             } else if (data && data.item) {
               data.item.label = angular.isObject(data.item.label) ? $('<div>').append(data.item.label).html() : data.item.label;
               angular.extend(ngModel, data.item);
             }
             angular.forEach(ctrl.$viewChangeListeners, function (listener) {
-              listener();
+              try {
+                listener();
+              } catch (e) {
+                $exceptionHandler(e);
+              }
             });
           }
         }
 
         function cleanNgModel() {
           ctrl.$setViewValue('');
-          changeNgModel('');
           ctrl.$render();
+          changeNgModel();
         }
 
         function autoFocusHandler() {
@@ -264,7 +269,10 @@ angular.module('ui.autocomplete', [])
         // extend Autocomplete methods to AngularJS
         angular.forEach(methodsName, function (name) {
           autocomplete.methods[name] = function () {
-            var args = [name].concat(Array.prototype.slice.call(arguments));
+            var args = [name];
+            angular.forEach(arguments, function (value) {
+              args.push(value);
+            });
             return element.autocomplete.apply(element, args);
           };
         });
