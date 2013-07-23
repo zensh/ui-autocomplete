@@ -96,17 +96,17 @@
         <thead>
             <tr>
                 <th>UID</th>
-                <th class="text-demo">Name</th>
+                <th class="text-demo">Name(groupLabel)</th>
                 <th>Age</th>
                 <th>Email</th>
-                <th class="text-demo">Group</th>
+                <th class="text-demo">Group(focusOpen)</th>
                 <th>Description</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="user in users">
                 <td>{{user.uid}}</td>
-                <td><input type="text" class="input-small" ng-model="user" ui-event="{autocompletecreate:'changeClass(searchUser)'}" ui-autocomplete="searchUser()"></td>
+                <td><input type="text" class="input-small span3" placeholder="search in name or Description " ng-model="user" ui-event="{autocompletecreate:'changeClass(searchUser)'}" ui-autocomplete="searchUser()"></td>
                 <td><input type="number" step="any" class="input-mini" min="16" ng-model="user.age" ></td>
                 <td><input type="text" ng-model="user.email" ></td>
                 <td><input type="text" class="input-mini" ng-model="user.group" ui-event="{autocompletecreate:'changeClass(searchGroup)'}" ui-autocomplete="searchGroup"></td>

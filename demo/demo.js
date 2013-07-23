@@ -47,7 +47,7 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
             var that = this;
             this.options = {
                 html: true,
-                minLength: 2,
+                minLength: 1,
                 outHeight: 100,
                 maxWidth: 300,
                 source: function (request, response) {
