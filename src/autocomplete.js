@@ -70,7 +70,7 @@ angular.module('ui.autocomplete', [])
           });
         },
 
-        _renderItem: function (ul, item) {
+        _renderItemData: function (ul, item) {
           var element = item.groupLabel || item.label;
           if (item.groupLabel) {
             element = $('<div>').append(element).addClass('ui-menu-group');
