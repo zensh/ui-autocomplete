@@ -1,6 +1,8 @@
 'use strict';
+/*global angular, $ */
+
 /*
- *  AngularJS Autocomplete, version 0.5.0
+ *  AngularJS Autocomplete, version 0.5.1
  *  Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
  *  API @ http://api.jqueryui.com/autocomplete/
  *
@@ -26,8 +28,6 @@
  *               // add a new method 'filter' for filtering source data in AngularJS controller
  *  };
  */
-
-/*global angular, $ */
 
 angular.module('ui.autocomplete', [])
   .directive('uiAutocomplete', ['$timeout', '$exceptionHandler',
@@ -84,7 +84,7 @@ angular.module('ui.autocomplete', [])
           } else {
             element = $('<a>').text(element);
           }
-          return $('<li>').append(element).appendTo(ul);
+          return $('<li>').append(element).appendTo(ul).data('ui-autocomplete-item', item);
         },
 
         _resizeMenu: function () {
