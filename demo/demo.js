@@ -6,35 +6,34 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
     function ($scope, $compile) {
         var uid = 4,
             users = [{
-                    uid: 1,
-                    group: 'user',
-                    name: 'name1',
-                    age: 25,
-                    email: 'name1@gmail.com',
-                    desc: 'user, 111111111111111111'
-                }, {
-                    uid: 2,
-                    group: 'user',
-                    name: 'name2',
-                    age: 26,
-                    email: 'name2@gmail.com',
-                    desc: 'user, 222222222222222'
-                }, {
-                    uid: 3,
-                    group: 'system',
-                    name: 'name3',
-                    age: 27,
-                    email: 'name3@gmail.com',
-                    desc: 'system, 3333333333333333333'
-                }, {
-                    uid: 4,
-                    group: 'system',
-                    name: 'name4',
-                    age: 28,
-                    email: 'name4@gmail.com',
-                    desc: 'system, 44444444'
-                }
-            ];
+                uid: 1,
+                group: 'user',
+                name: 'name1',
+                age: 25,
+                email: 'name1@gmail.com',
+                desc: 'user, 111111111111111111'
+            }, {
+                uid: 2,
+                group: 'user',
+                name: 'name2',
+                age: 26,
+                email: 'name2@gmail.com',
+                desc: 'user, 222222222222222'
+            }, {
+                uid: 3,
+                group: 'system',
+                name: 'name3',
+                age: 27,
+                email: 'name3@gmail.com',
+                desc: 'system, 3333333333333333333'
+            }, {
+                uid: 4,
+                group: 'system',
+                name: 'name4',
+                age: 28,
+                email: 'name4@gmail.com',
+                desc: 'system, 44444444'
+            }];
 
         function nameToValue(obj) {
             if (angular.isObject(obj) && angular.isUndefined(obj.value)) {
@@ -133,13 +132,13 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
                     if (!data.length) {
                         data.push({
                             label: 'not found',
-                            value: ''
+                            value: null
                         });
                     }
                     // add "Add Language" button to autocomplete menu bottom
                     data.push({
                         label: $compile('<a class="ui-menu-add" ng-click="add()">Add Language</a>')($scope),
-                        value: ''
+                        value: null
                     });
                     response(data);
                 }
@@ -155,16 +154,16 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
                 onlySelect: true,
                 source: function (request, response) {
                     var data = [
-                            "guest",
-                            "user",
-                            "system"
+                        "guest",
+                        "user",
+                        "system"
                     ];
                     data = $scope.myOption.methods.filter(data, request.term);
 
                     if (!data.length) {
                         data.push({
                             label: 'not found',
-                            value: ''
+                            value: null
                         });
                     }
                     response(data);
