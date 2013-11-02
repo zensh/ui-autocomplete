@@ -184,4 +184,33 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
             });
         };
     }
-]);
+]).controller('MyController', function ($scope, $compile) {
+  $scope.myTestListIds = [ "Country", "Programming", "Planet" ];
+  $scope.selecteModel = {};
+  $scope.data = {
+    "Country": [ "France", "Finland", "USA"],
+    "Programming" : [ "Java", "JavaScript", "CSS", "HTML5" ],
+    "Planet": [ "Earth", "Mars", "Jupiter", "Saturn" ]
+  };
+
+  /* config object */
+  $scope.myOption = function(listId) {
+    return {
+      options: {
+            html: true,
+            focusOpen: true,
+            onlySelect: true,
+            source: function (request, response) {
+                console.log(123, request, response)
+                var listData = $scope.data[listId];
+                var result = [];
+                angular.forEach(listData, function(s) {
+                  result.push({label: s, value:s});
+                });
+
+                response(result);
+            }
+        }
+    };
+  }
+});

@@ -2,7 +2,7 @@
 /*global angular, $ */
 
 /*
- *  AngularJS Autocomplete, version 0.5.2
+ *  AngularJS Autocomplete, version 0.5.3
  *  Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
  *  API @ http://api.jqueryui.com/autocomplete/
  *
@@ -139,7 +139,9 @@ angular.module('ui.autocomplete', [])
                   ctrl.$render();
                 }
               }, true);
+              ctrl.$pristine = false // hack:prevent change to dirty
               ctrl.$setViewValue(ngModel.value);
+              ctrl.$pristine = true
             }
             if (value) {
               // unregister the watch after get value
