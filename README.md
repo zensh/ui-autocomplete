@@ -12,14 +12,18 @@ AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
 
 
 
+# Installation options
+
+    bower install --save https://github.com/zensh/ui-autocomplete.git
+
 # Usage
 
 Load the script files in your application like this:
 
-    <script type="text/javascript" src="javasript/jquery/jquery.js"></script>
-    <script type="text/javascript" src="javasript/jquery-ui/jquery-ui.js"></script>
-    <script type="text/javascript" src="javasript/angular/angular.js"></script>
-    <script type="text/javascript" src="javasript/angular-ui/autocomplete.js"></script>
+    <script type="text/javascript" src="javascript/jquery/jquery.js"></script>
+    <script type="text/javascript" src="javascript/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="javascript/angular/angular.js"></script>
+    <script type="text/javascript" src="javascript/angular-ui/autocomplete.js"></script>
 
 Add the autocomplete module as a dependency to your application module:
 
