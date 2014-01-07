@@ -1,4 +1,4 @@
-# ui-autocomplete directive v0.5.3
+# ui-autocomplete directive v0.5.4
 Intend to replace Select2!
 
 AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
@@ -14,7 +14,7 @@ AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
 
 # Installation options
 
-    bower install --save https://github.com/zensh/ui-autocomplete.git
+    bower install ui-autocomplete
 
 # Usage
 
