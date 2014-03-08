@@ -117,7 +117,7 @@ angular.module('ui.autocomplete', [])
             isObject = angular.isObject,
             extend = angular.extend,
             autocomplete = scope.$eval(attr.uiAutocomplete),
-            valueMethod = element.val.bind(element),
+            valueMethod = angular.bind(element, element.val),
             methodsName = ['close', 'destroy', 'disable', 'enable', 'option', 'search', 'widget'],
             eventsName = ['change', 'close', 'create', 'focus', 'open', 'response', 'search', 'select'];
 
