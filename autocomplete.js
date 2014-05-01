@@ -175,7 +175,7 @@ angular.module('ui.autocomplete', [])
               }
               if (value === null) {
                 ctrl.$render();
-              } else if (ctrl.$viewValue === '') {
+              } else if (value === '') {
                 scope.$apply(function () {
                   changeNgModel();
                 });
