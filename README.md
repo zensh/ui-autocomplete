@@ -1,4 +1,4 @@
-# ui-autocomplete directive v0.5.4
+# ui-autocomplete directive v0.5.6
 Intend to replace Select2!
 
 AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
