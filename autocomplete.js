@@ -1,5 +1,5 @@
 'use strict';
-/*global angular, $ */
+/*global angular, $, setTimeout*/
 
 /*
  *  AngularJS Autocomplete, version 0.5.6
@@ -139,9 +139,9 @@ angular.module('ui.autocomplete', [])
                   ctrl.$render();
                 }
               }, true);
-              ctrl.$pristine = false // hack:prevent change to dirty
+              ctrl.$pristine = false; // hack:prevent change to dirty
               ctrl.$setViewValue(ngModel.value);
-              ctrl.$pristine = true
+              ctrl.$pristine = true;
             }
             if (value) {
               // unregister the watch after get value
@@ -167,7 +167,7 @@ angular.module('ui.autocomplete', [])
               // update view value and Model value
               var value = valueMethod();
 
-              if (!selectItem || !selectItem.item || !value.indexOf(selectItem.item.value,0)) {
+              if (!selectItem || !selectItem.item || !value.indexOf(selectItem.item.value)) {
                 // if onlySelect, element value must be selected from search menu, otherwise set to ''.
                 value = autocomplete.options.onlySelect ? '' : value;
               } else {
