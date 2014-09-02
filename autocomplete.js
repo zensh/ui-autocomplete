@@ -2,7 +2,7 @@
 /*global angular, $, setTimeout*/
 
 /*
- *  AngularJS Autocomplete, version 0.5.6
+ *  AngularJS Autocomplete, version 0.5.7
  *  Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
  *  API @ http://api.jqueryui.com/autocomplete/
  *
