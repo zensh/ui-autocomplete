@@ -167,7 +167,7 @@ angular.module('ui.autocomplete', [])
               // update view value and Model value
               var value = valueMethod();
 
-              if (!selectItem || !selectItem.item || !value.indexOf(selectItem.item.value)) {
+              if (!selectItem || !selectItem.item || (value.indexOf(selectItem.item.value) == -1)) {
                 // if onlySelect, element value must be selected from search menu, otherwise set to ''.
                 value = autocomplete.options.onlySelect ? '' : value;
               } else {
