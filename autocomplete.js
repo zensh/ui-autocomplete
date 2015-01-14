@@ -173,22 +173,21 @@ angular.module('ui.autocomplete', [])
                 value = selectItem.item.value;
                 selected = true;
               }
-              if (value === null) {
-                ctrl.$render();
-              } else if (value === '') {
-                scope.$apply(function () {
+
+              scope.$apply(function () {
+                if (autocomplete.options.onlySelectValid) {
+                  ctrl.$setValidity('onlyselect', selected);
+                }
+                if (value === null) {
+                  ctrl.$render();
+                } else if (value === '') {
                   changeNgModel();
-                });
-              } else if (ctrl.$viewValue !== value) {
-                scope.$apply(function () {
+                } else if (ctrl.$viewValue !== value) {
                   ctrl.$setViewValue(value);
-                  if (autocomplete.options.onlySelectValid) {
-                    ctrl.$setValidity('onlyselect', selected);
-                  }
                   ctrl.$render();
                   changeNgModel(selectItem);
-                });
-              }
+                }
+              });
             }
           };
 
