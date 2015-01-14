@@ -10,7 +10,7 @@
  *  $scope.myOptions = {
  *      options: {
  *          html: false, // boolean, uiAutocomplete extend, if true, you can use html string or DOM object in data.label for source
- *          onlySelect: false, // boolean, uiAutocomplete extend, if true, element value must be selected from suggestion menu, otherwise set to ''.
+ *          onlySelectValid: false, // boolean, uiAutocomplete extend, if true, element value must be selected from suggestion menu, otherwise set validity of 'onlyselect' to false.
  *          focusOpen: false, // boolean, uiAutocomplete extend, if true, the suggestion menu auto open with all source data when focus
  *          groupLabel: null, // html string or DOM object, uiAutocomplete extend, it is used to group suggestion result, it can't be seleted.
  *          outHeight: 0, // number, uiAutocomplete extend, it is used to adjust suggestion menu' css style "max-height".
@@ -166,13 +166,12 @@ angular.module('ui.autocomplete', [])
             },
             change: function (event, ui) {
               // update view value and Model value
-              var value = valueMethod();
+              var value = valueMethod(),
+                selected = false;
 
-              if (!selectItem || !selectItem.item || (value.indexOf(selectItem.item.value) == -1)) {
-                // if onlySelect, element value must be selected from search menu, otherwise set to ''.
-                value = autocomplete.options.onlySelect ? '' : value;
-              } else {
+              if (selectItem && selectItem.item && (value.indexOf(selectItem.item.value) != -1)) {
                 value = selectItem.item.value;
+                selected = true;
               }
               if (value === null) {
                 ctrl.$render();
@@ -183,6 +182,9 @@ angular.module('ui.autocomplete', [])
               } else if (ctrl.$viewValue !== value) {
                 scope.$apply(function () {
                   ctrl.$setViewValue(value);
+                  if (autocomplete.options.onlySelectValid) {
+                    ctrl.$setValidity('onlyselect', selected);
+                  }
                   ctrl.$render();
                   changeNgModel(selectItem);
                 });

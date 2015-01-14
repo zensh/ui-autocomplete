@@ -102,7 +102,7 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
             options: {
                 html: true,
                 minLength: 1,
-                onlySelect: true,
+                onlySelectValid: true,
                 outHeight: 50,
                 source: function (request, response) {
                     var data = [
@@ -151,7 +151,7 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
         $scope.searchGroup = {
             options: {
                 focusOpen: true,
-                onlySelect: true,
+                onlySelectValid: true,
                 source: function (request, response) {
                     var data = [
                         "guest",
@@ -199,7 +199,7 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
       options: {
             html: true,
             focusOpen: true,
-            onlySelect: true,
+            onlySelectValid: true,
             source: function (request, response) {
                 console.log(123, request, response)
                 var listData = $scope.data[listId];
