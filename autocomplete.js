@@ -32,8 +32,9 @@
 angular.module('ui.autocomplete', [])
   .directive('uiAutocomplete', ['$timeout', '$exceptionHandler',
     function ($timeout, $exceptionHandler) {
-      var proto = $.ui.autocomplete.prototype,
-        initSource = proto._initSource;
+      var proto = $.ui.autocomplete.prototype;
+      var initSource = proto._initSource;
+      var slice = Array.prototype.slice;
 
       function filter(array, term) {
         var matcher = new RegExp($.ui.autocomplete.escapeRegex(term), 'i');
@@ -118,7 +119,7 @@ angular.module('ui.autocomplete', [])
             extend = angular.extend,
             autocomplete = scope.$eval(attr.uiAutocomplete),
             valueMethod = angular.bind(element, element.val),
-            methodsName = ['close', 'destroy', 'disable', 'enable', 'option', 'search', 'widget'],
+            methodsName = ['close', 'destroy', 'disable', 'enable', 'instance', 'option', 'search', 'widget'],
             eventsName = ['change', 'close', 'create', 'focus', 'open', 'response', 'search', 'select'];
 
           var unregisterWatchModel = scope.$watch(attr.ngModel, function (value) {
@@ -280,10 +281,8 @@ angular.module('ui.autocomplete', [])
           // extend Autocomplete methods to AngularJS
           each(methodsName, function (name) {
             autocomplete.methods[name] = function () {
-              var args = [name];
-              each(arguments, function (value) {
-                args.push(value);
-              });
+              var args = slice.call(arguments);
+              args.unshift(name);
               return element.autocomplete.apply(element, args);
             };
           });
