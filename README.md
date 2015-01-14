@@ -41,7 +41,7 @@ All the options must be passed through the directive. There have added 5 options
 
 - **html** If true, you can use html string or DOM object in sourceData.label
 - **focusOpen** If true, the suggestion menu auto open with all source data when element focus
-- **onlySelect** If true, element value must be selected from suggestion menu, otherwise the value will be set to ''
+- **onlySelectValid** If true, element value must be selected from suggestion menu, otherwise set validity of 'onlyselect' to false
 - **groupLabel** html string or DOM object, it is used to group suggestion result, it can't be seleted
 - **outHeight** number, it is used to adjust suggestion menu' css style "max-height", and you would set css "overflow-y", see demo.
 
@@ -53,7 +53,7 @@ You can config options like this:
             options: {
                 html: true,
                 focusOpen: true,
-                onlySelect: true,
+                onlySelectValid: true,
                 source: function (request, response) {
                     var data = [
                             "Asp",
