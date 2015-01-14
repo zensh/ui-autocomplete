@@ -2,8 +2,8 @@
 /*global angular, $, setTimeout*/
 
 /*
- *  AngularJS Autocomplete, version 0.5.7
- *  Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
+ *  AngularJS Autocomplete, version 0.6.0
+ *  Wrapper for the jQuery UI Autocomplete Widget - v1.11.2
  *  API @ http://api.jqueryui.com/autocomplete/
  *
  *  <input type="text" ng-model="modelObj" ui-autocomplete="myOptions">
@@ -169,7 +169,7 @@ angular.module('ui.autocomplete', [])
               var value = valueMethod(),
                 selected = false;
 
-              if (selectItem && selectItem.item && (value.indexOf(selectItem.item.value) != -1)) {
+              if (selectItem && selectItem.item && (value.indexOf(selectItem.item.value) !== -1)) {
                 value = selectItem.item.value;
                 selected = true;
               }
