@@ -84,7 +84,10 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
             };
             this.events = {
                 change: function (event, ui) {
-                    console.log(ui);
+                    console.log('change', event, ui);
+                },
+                select: function (event, ui) {
+                    console.log('select', event, ui);
                 }
             };
         }
@@ -141,6 +144,14 @@ controller('uiAutocompleteCtr', ['$scope', '$compile',
                         value: null
                     });
                     response(data);
+                }
+            },
+            events: {
+                change: function (event, ui) {
+                    console.log('change', event, ui);
+                },
+                select: function (event, ui) {
+                    console.log('select', event, ui);
                 }
             }
         };
