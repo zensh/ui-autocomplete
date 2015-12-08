@@ -14,7 +14,7 @@ AngularJS Autocomplete Wrapper for the jQuery UI Autocomplete Widget - v1.11.2
 
 # Installation options
 
-    bower install ui-autocomplete
+    bower install ui-autocomplete --save
 
 # Usage
 
