@@ -35,7 +35,7 @@ Apply the directive to your input elements:
 
 ## ui-autocomplete option
 
-###Options
+### Options
 
 All the options must be passed through the directive. There have added 5 options besides official options:
 
@@ -102,7 +102,7 @@ You can config options like this:
 
 **All official options [Here](http://api.jqueryui.com/autocomplete/#option).**
 
-###Methods
+### Methods
 
 Autocomplete methods will be added to `$scope.myOption.methods` after Autocomplete initialized. There also have added 2 methods:
 
@@ -119,7 +119,7 @@ You can invoke methods like this:
 
 **All official methods [Here](http://api.jqueryui.com/autocomplete/#methods).**
 
-###Events
+### Events
 
 Autocomplete events will be emitted just like official events triggered.
 
